@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: iris-flask-app-monitor
+  labels:
+    app: iris-flask-app
+spec:
+  selector:
+    matchLabels:
+      app: iris-flask-app
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 10s
+  namespaceSelector:
+    matchNames:
+      - default

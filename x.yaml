@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iris-flask-app
+  labels:
+    app: iris-flask-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: iris-flask-app
+  template:
+    metadata:
+      labels:
+        app: iris-flask-app
+      annotations:
+        prometheus.io/scrape: "true"               # Enable scraping
+        prometheus.io/port: "8080"                 # The port your Flask app is running on
+    spec:
+      containers:
+      - name: iris-flask-app
+        image: docker.io/vikram0504/iris-flask-app  # Specify the correct image
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
